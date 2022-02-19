@@ -1,5 +1,7 @@
 {
   "dependencies": {
-    "three": "^0.137.5"
+    "http-server": "^14.1.0",
+    "three": "^0.137.5",
+    "three-fly-controls": "^2.0.0"
   }
 }
