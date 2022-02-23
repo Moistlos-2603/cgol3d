@@ -36,7 +36,7 @@ class OrbitControls extends EventDispatcher {
 		this.enabled = true;
 
 		// "target" sets the location of focus, where the object orbits around
-		this.target = new Vector3(3,3,3);
+		this.target = new Vector3();
 		 
 		// How far you can dolly in and out ( PerspectiveCamera only )
 		this.minDistance = 0;

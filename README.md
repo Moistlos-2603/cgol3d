@@ -7,7 +7,7 @@ In terminal eingeben
 
 ## Task List
 - [x] Controler
-- [ ] Arry in Blöcke ändern
-- [ ] Schönere grafik aka Licht usw.
+- [x] Arry in Blöcke ändern
+- [-] Schönere grafik aka Licht usw.
 - [ ] Regeln Implementieren
 - [ ] UI  
