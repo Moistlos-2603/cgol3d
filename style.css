@@ -2,3 +2,33 @@
     margin: 0;
     padding: 0;
 }
+
+#scoreboard{
+    width: 160px;
+    height: 100px;
+    z-index: 4;
+    position: relative;
+}
+
+canvas{
+    position: absolute;   
+    top: 0;
+}
+
+.scoreboardschrift{
+    color: white;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.cords_input{
+    color: black;
+    display: flex;
+}
+
+#addblock{
+    float: right;
+    position: relative;
+    display: inline;
+    z-index: 4;
+    margin-right: 15px;
+}

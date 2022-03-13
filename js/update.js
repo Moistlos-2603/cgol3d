@@ -1,5 +1,5 @@
 // das Gesamte Board updaten und jeden Gme tic ausgeführt werden 
-export function update(board){ 
+export function update(board,  el, eu, fl, fu){ 
     const board_size = board.length 
 
     //Durchläuft das Gesamte Board array und ruft für jede Zelle checkneighbours() auf
@@ -7,6 +7,14 @@ export function update(board){
         for(var j = 0; j < board_size; j++){            
             for(var l = 0; l < board_size; l++){
                 checkneighbours(i, j, l)
+            }
+        }
+    }
+
+    for(var a = 0; a< board_size; a++){
+        for(var b = 0; b < board_size;b ++){            
+            for(var c = 0; c < board_size; c++){
+                regel(a, b, c, el, eu, fl, fu) 
             }
         }
     }
@@ -21,9 +29,9 @@ export function update(board){
                        // console.log(i+k +", " + (j+o) + ", " + (l+p))
                         if(board[i+k][j+o][l+p].alive == 1 ){
                             if( (i+k != i) || (j+p != j) || (l+o != l)){// sorgt dafür, das sich die Zelle selbst als nachbar erkennt.
-                               
+                                
                                 board[i][j][l].neighbours += 1
-                                console.log("fuck ja")
+                                
                             }
                         }
                     }
@@ -31,6 +39,31 @@ export function update(board){
             }
         }
     }
-    console.log(board)
+
+
+
+    // R = (5766)
+    // R steht für die Regel
+    // in der Klamma steht (El, Eu, Fl, Fu)
+    // E ist environment und gilt für die Zahl von Nachbarn die ein Zelle brauch um zu überleben und es gilt El <= E <= Eu
+    // F ist Fertility und ist die Zahl die gebraucht wird für neue Zellen und es gilt Fl <= F <= Fu
+    // Für 2D ist der standart R = (2333)
+
+    function regel(i, j, l, el, eu, fl, fu){
+        if(board[i][j][l].alive == 1){
+            if(board[i][j][l].neighbours >= el && board[i][j][l].neighbours <= eu){
+                board[i][j][l].alive = 1
+            }else{
+                board[i][j][l].alive = 0
+            }
+        }else{
+            if(board[i][j][l].neighbours >= fl && board[i][j][l].neighbours <= fu){
+                board[i][j][l].alive = 1
+            }else(
+                board[i][j][l].alive = 0
+            )
+        }
+    }
+    window.board = board
     return board
 }
