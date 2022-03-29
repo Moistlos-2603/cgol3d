@@ -20,8 +20,14 @@
         window.start = false
          
         function fpsinput(){ // gibt die fps an
-            window.fpsInterval = 1000/ document.getElementById('fps').value
-            window.fps = document.getElementById('fps').value
+            const fps = parseInt(document.getElementById('fps').value)
+            if(!(fps >= 0) || !(fps <=24) || !Number.isInteger(fps)){
+                alert("Ein ungültiger wert wurde eingegeben. Gültige werte sind Zahlen > 0 ")
+                
+            }else{
+                window.fpsInterval = 1000/ document.getElementById('fps').value
+                window.fps = document.getElementById('fps').value
+            }
         }
 
 

@@ -187,16 +187,31 @@ export function setup(){
     
 
     window.addblock = function(){
-        const x = document.getElementById("x").value
-        const y = document.getElementById("y").value
-        const z = document.getElementById("z").value
-        if(window.board[x][y][z].alive != 1){
-            window.board[x][y][z].alive = 1
-        }else{
-            window.board[x][y][z].alive = 0
-        }
+        const x = parseInt(document.getElementById("x").value)
+        const y = parseInt(document.getElementById("y").value)
+        const z = parseInt(document.getElementById("z").value)
+
+        if(!(x >= 0) || !(x <=24) || !Number.isInteger(x)){
         
-        arraytoblock(window.board, board_size)
+            alert("Ein ungültiger wert wurde eingegeben. Gültige werte sind Natürliche Zahlen von 0 bis 24")
+        }else if(!(y >= 0) || !(y <=24) || !Number.isInteger(y)){
+        
+            alert("Ein ungültiger wert wurde eingegeben. Gültige werte sind Natürliche Zahlen von 0 bis 24")
+        }else if(!(z >= 0) || !(z <=24) || !Number.isInteger(z)){
+        
+            alert("Ein ungültiger wert eingegeben. Gültige werte sind Natürliche Zahlen von 0 bis 24")
+        }else{
+
+            if(window.board[x][y][z].alive != 1){
+                window.board[x][y][z].alive = 1
+            }else{
+                window.board[x][y][z].alive = 0
+            }
+            
+            arraytoblock(window.board, board_size)
+        } 
+
+
     }
     
     
