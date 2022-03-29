@@ -1,14 +1,14 @@
-
 import * as THREE from '../modules/three.module.js';
 import { OrbitControls } from '../modules/OrbitControls.js';
 
 import { update } from './update.js';
 import { crate_board } from './crate_board.js';
+//import { random } from './random.js';
 
 import * as GUI from '../modules/dat.gui.module.js'
 
-export function setup(){
 
+export function setup(){
     // set up Scene
     const scene = new THREE.Scene();
     window.scene = scene
@@ -30,6 +30,20 @@ export function setup(){
     pointLight.position.z = 30
     scene.add(pointLight)
 
+   
+
+    
+    
+    // Dat Gui
+    const gui = new GUI.GUI()
+    const lightFolder = gui.addFolder('Light')
+    lightFolder.add(pointLight.position, 'x', -5, 30  )
+    lightFolder.add(pointLight.position, 'y', -5, 30  )
+    lightFolder.add(pointLight.position, 'z', -5, 30  )
+    lightFolder.open()
+
+
+
     // Cube
     const geometry = new THREE.BoxGeometry();
     const material = new THREE.MeshStandardMaterial({color: 0xfc03eb})
@@ -37,7 +51,7 @@ export function setup(){
         const cube = new THREE.Mesh( geometry, material );
         cube.position.x = x
         cube.position.y = y
-        cube.position.z = z
+        cube.position.z = -z 
         cube.scale.x = 0.8
         cube.scale.y = 0.8
         cube.scale.z = 0.8
@@ -46,41 +60,27 @@ export function setup(){
         window.cube = cube
     }
 
-    // Dat Gui
-    const gui = new GUI.GUI()
-    const fpsFolder = gui.addFolder('Cube')
-    //fpsFolder.add(fps, 'fps', 0.1 , 10)
 
 
+    // FPS eingabe
+    function fpsinput(){
+        window.fpsInterval = 1000/document.getElementById('fps')
+    }
 
+    // Das spiel läuft
+    window.start = false
 
     // Board Size
     const board_size = 25;
     
-    
-    // Convert
-    function arraytoblock(board, board_size){
-        clearThree(scene)
-        for(var i = 0; i< board_size; i++){
-            for(var j = 0; j < board_size; j++){
-                for(var l = 0; l < board_size; l++){
-                    if(board[i][j][l].alive == 1){
-                        addcube(i-12.5,j-12.5,l-12.5)
-                        
-                    }
-                }
-            }
-        }
-    
-        
-    }
 
     // Clear alles aus der Scene außer dem Licht(Index = 0)
-    function clearThree(obj){
-        while(obj.children.length > 1){ 
-          clearThree(obj.children[1]);
-          obj.remove(obj.children[1]);
+    const clearThree = function (obj){
+        while(obj.children.length > 2){ 
+          clearThree(obj.children[2]);
+          obj.remove(obj.children[2]);
         }
+        
         if(obj.geometry) obj.geometry.dispose();
       
         if(obj.material){ 
@@ -93,7 +93,28 @@ export function setup(){
           })
           obj.material.dispose();
         }
+        
+       //linesetup(board_size)
     }  
+    window.clearThree = clearThree
+
+
+    // Zeigt alle Zelle an ensprechend dem Array 
+    function arraytoblock(board, board_size){
+        
+       linesetup(board_size)
+        for(var i = 0; i< board_size; i++){
+            for(var j = 0; j < board_size; j++){
+                for(var l = 0; l < board_size; l++){
+                    if(board[i][j][l].alive == 1){
+                        addcube(i-12, j-12, l-12)
+                        
+                    }
+                }
+            }
+        }
+    }
+    window.arraytoblock = arraytoblock
     
 
     // OrbitControls 
@@ -106,30 +127,35 @@ export function setup(){
     // Animationsloop 
     var stop = false;
     var frameCount = 0;
-    var fps = 1 
-    var fpsInterval, startTime, now, then, elapsed
+    var fps = 1
+    var startTime, now, elapsed
     function startAnimation(fps){
-        fpsInterval = 1000 / fps
-        then = Date.now();
-        startTime = then
+        window.fpsInterval = 1000 / fps
+        window.then = Date.now();
+        startTime = window.then
         animate()
         animitaion()
     }
-
+    window.generation = 0
     // Animiert die Blöcke(game Ticks)
     function animate(){
         requestAnimationFrame(animate)
         now = Date.now()
-        elapsed = now - then;
-        if(elapsed > fpsInterval){
-            then = now -(elapsed % fpsInterval)
-            arraytoblock(update(window.board, 5, 7, 6, 6), board_size)
-            
-            generation++;
-            document.getElementById('generation').innerHTML = ("Generation: " + generation)
-            document.getElementById('bevoelkerung').innerHTML = ("Bevölkerung: " + anzahllebende(window.board, board_size))
-
+        elapsed = now - window.then;
+        var boardzwei 
+        var board = window.board
+        //if(board.every((val, index) => val === b[index]))
+        if(window.start == true){
+            if(elapsed >  window.fpsInterval){
+                then = now -(elapsed %  window.fpsInterval)
+                clearThree(scene)
+                arraytoblock(update(window.board, 5, 7, 6, 6), board_size)
+                window.generation ++;
+                document.getElementById('generation').innerHTML = ("Generation: " + window.generation)
+                document.getElementById('bevoelkerung').innerHTML = ("Bevölkerung: " + anzahllebende(window.board, board_size))
+            }
         }
+ 
     }
     
     // Zählt wie viele Zellen am Leben sind
@@ -152,6 +178,7 @@ export function setup(){
     function animitaion(){
         orbitControls.update()
         renderer.render(scene, camera)
+
         requestAnimationFrame(animitaion)
     }
 
@@ -159,14 +186,27 @@ export function setup(){
     startAnimation(fps)
     
 
-
+    window.addblock = function(){
+        const x = document.getElementById("x").value
+        const y = document.getElementById("y").value
+        const z = document.getElementById("z").value
+        if(window.board[x][y][z].alive != 1){
+            window.board[x][y][z].alive = 1
+        }else{
+            window.board[x][y][z].alive = 0
+        }
+        
+        arraytoblock(window.board, board_size)
+    }
     
     
     window.board = crate_board(board_size)
+    //window.board = random(window.board, board_size)
     arraytoblock(window.board, board_size)
 
 
     // Glider
+
     
     window.board[3][24][4].alive = 1
     window.board[4][23][4].alive = 1
@@ -192,17 +232,42 @@ export function setup(){
     window.board[3][5][5].alive = 1
     */
 
+    // Ecken
 
-    //update(window.board, 5, 7, 6, 6) // R = (5, 7, 6, 6)
+    /*
+    window.board[0][0][0].alive = 1
+    window.board[0][0][24].alive = 1
+    window.board[0][24][0].alive = 1
+    window.board[0][24][24].alive = 1
+    window.board[24][0][0].alive = 1
+    window.board[24][0][24].alive = 1
+    window.board[24][24][0].alive = 1
+    window.board[24][24][24].alive = 1
+    */
+
+
+    // Mitte
+    
+    // window.board[12][12][12].alive = 1
+
+
     // 5, 7, 6, 6
     arraytoblock(window.board, board_size)
-    
-    arraytoblock(update(window.board, 5, 7, 6, 6), board_size)
-    arraytoblock(update(window.board, 5, 7, 6, 6), board_size)
-    arraytoblock(update(window.board, 5, 7, 6, 6), board_size);
    
 
+    window.linesetup = linesetup
 
+ 
+
+}
+
+function linesetup(board_size){// um rund um das Spielfeld Linien zu setzen
+    const geometry = new THREE.BoxGeometry( board_size, board_size, board_size );
+    
+    const edges = new THREE.EdgesGeometry( geometry );
+    const line = new THREE.LineSegments( edges, new THREE.LineBasicMaterial( { color: 0xff08ff } ) );
+    
+    scene.add( line );
 
 
 }

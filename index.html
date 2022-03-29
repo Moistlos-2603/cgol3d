@@ -6,19 +6,111 @@
     <title>conway's game of life in 3d</title>
     <link rel="stylesheet" href="style.css">
     <link rel="icon" type="image/gif" href="./favicon.png">
+    
 </head>
 <body>
     <script type="module" src="js/main.js"></script>
+    <script src="js/vorlage/glider.js"></script>
+    <script src="js/vorlage/balcken.js"></script>
+    <script src="js/vorlage/random.js"></script>
+    <script src="js/vorlage/clear.js"></script>
+
+
+    <script>
+        window.start = false
+         
+        function fpsinput(){ // gibt die fps an
+            window.fpsInterval = 1000/ document.getElementById('fps').value
+            window.fps = document.getElementById('fps').value
+        }
+
+
+        function startstop(){// startet und stopt die Game ticks
+            console.log(window.start)
+            console.log(window.fps)
+            if(window.start == true){
+                window.start = false
+                
+            }else{
+                window.start = true
+                window.then = Date.now()
+            }
+        }
+
+        function vorlage(){
+            const vorlageValue = document.getElementById("vorlagen").value;
+            reset()            
+            if(vorlageValue == "glider"){
+                glider()
+            }if (vorlageValue == "balcken") {
+                balken()
+            }if (vorlageValue == "random") {
+                random(window.board, 25)
+            }
+            window.arraytoblock(window.board, 25)
+        }
+    
+    
+        function reset(){
+            for(var i = 0; i< 25; i++){
+                for(var j = 0; j < 25; j++){
+                    for(var l = 0; l < 25; l++){
+                        if(window.board[i][j][l].alive == 1){
+
+                            window.board[i][j][l].alive = 0
+                        }
+                    }
+                }
+            }
+            clearThree(scene)
+            window.arraytoblock(window.board, 25)
+            window.generation = 0
+        }
+        
+    </script>
     <div id="scoreboard">
         <h2 class="scoreboardschrift">Scoreboard</h2>
         <p id="generation" class="scoreboardschrift score ">Generation: 0</p>
         <p id="bevoelkerung" class="scoreboardschrift score ">Bevölkerung: 0</p>
     </div>
-    <div id="addblock">
-        <input class="cords_input" id="x" type="x">
-        <input class="cords_input" id="y" type="y">
-        <input class="cords_input" id="z" type="z">
-        
+    <div class="sideholder">
+        <div class="insideholder addblockholder">
+            <input placeholder="x" class="cords_input" id="x" type="text">
+            <input placeholder="y" class="cords_input" id="y" type="text">
+            <input placeholder="z" class="cords_input" id="z" type="text">
+            <button class="button" onclick="window.addblock()"></button>
+          
+        </div>
+        <div class="insideholder fpsholder">
+            <input id="fps" type="text">
+            <button class="button" onclick="fpsinput()"></button>
+        </div>
+        <div class="insideholder startstop">
+            <button class="button" id="startstop" onclick="startstop()">Start/Stop</button>
+
+        </div>
+        <div class="insideholder ">
+            <select onchange="vorlage()" name="Vorlagen" id="vorlagen">
+                <option value="glider">Glider</option>
+                <option value="balcken">Balcken</option>
+                <option value="random">Zufällig</option>
+
+            </select>
+            
+        </div>
+
+        <div class="insideholder startstop">
+            <button class="button" id="reset" onclick="reset()">Reset</button>
+
+
+        </div>
     </div>
+
 </body>
 </html>
+
+
+
+
+
+

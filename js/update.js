@@ -1,7 +1,6 @@
 // das Gesamte Board updaten und jeden Gme tic ausgeführt werden 
 export function update(board,  el, eu, fl, fu){ 
     const board_size = board.length 
-
     //Durchläuft das Gesamte Board array und ruft für jede Zelle checkneighbours() auf
     for(var i = 0; i< board_size; i++){
         for(var j = 0; j < board_size; j++){            
@@ -64,6 +63,7 @@ export function update(board,  el, eu, fl, fu){
             )
         }
     }
+
     window.board = board
     return board
 }

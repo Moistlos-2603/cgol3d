@@ -17,8 +17,8 @@ export function crate_board(board_size){
             }
         }
     }
-    return board
     window.board = board
+    return board
 }
 
 

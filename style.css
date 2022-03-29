@@ -22,13 +22,52 @@ canvas{
 
 .cords_input{
     color: black;
-    display: flex;
+    display: inline;
+    width: 30px;
 }
 
 #addblock{
     float: right;
+    display: flex;
     position: relative;
     display: inline;
     z-index: 4;
     margin-right: 15px;
 }
+
+.button{
+    width: 30px;
+    height: 16px;
+}
+
+.sideholder{
+    width: 250px;
+    height: 400px;
+    float: left;
+    z-index: 5;
+    position: relative;
+}
+
+.addblockholder{
+    position: relative;
+    z-index: 5;
+}
+
+.insideholder{
+    padding: 5px;
+}
+
+#startstop{
+    width: fit-content;
+    height: inherit;
+    
+
+}
+#vorlagen{
+    width: fit-content;
+}
+
+#reset{
+    height: inherit;
+    width: fit-content;
+}   
