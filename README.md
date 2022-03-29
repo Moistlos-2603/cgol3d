@@ -1,13 +1,7 @@
 # cgol3d
-cconway's game of life in 3d 
+cgol3d steht für Conway's Game of Life. Bei diesem Projekt handelt es sich um eine Umsetzung, des Informatik Klassikers in 3D mit der Sprache JavaScript und dem THREE.js modul
 
 ## Starten
 In terminal eingeben 
 'npx http-server'
 
-## Task List
-- [x] Controler
-- [x] Arry in Blöcke ändern
-- [-] Schönere grafik aka Licht usw.
-- [ ] Regeln Implementieren
-- [ ] UI  
