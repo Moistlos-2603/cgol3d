@@ -13,7 +13,7 @@ In dem Ordner über das Terminal eingeben:
 'npx http-server'
 
 ## ToDo
-[] Initialisieren
-[] Spielansicht 
-[] Update
-[] Benutzer Oberfläche
+[ ] Initialisieren
+[ ] Spielansicht 
+[ ] Update
+[ ] Benutzer Oberfläche
