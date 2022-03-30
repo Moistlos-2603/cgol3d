@@ -6,14 +6,14 @@ cgol3d steht für Conway's Game of Life in 3D. Bei diesem Projekt handelt es sic
 ## Starten
 Node.js installieren
 
-'npm install --global http-server'
+`npm install --global http-server`
 ausführen 
 
 In dem Ordner über das Terminal eingeben:
-'npx http-server'
+`npx http-server`
 
-## ToDo
-[ ] Initialisieren
-[ ] Spielansicht 
-[ ] Update
-[ ] Benutzer Oberfläche
+## To-do
+- [ ] Initialisieren
+- [ ] Spielansicht 
+- [ ] Update
+- [ ] Benutzer Oberfläche
